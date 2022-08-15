@@ -51,14 +51,16 @@ namespace Eloi
                         , out finalArray[11]
                         , out finalArray[12]
                         , out finalArray[13]);
-            Eloi.E_PrimitiveBoolUtility.IntToFourBytes(
+            Eloi.E_PrimitiveBoolUtility.UshortToTwoBytes(
                         in source.m_data.m_width
                         , out finalArray[14]
-                        , out finalArray[15]
+                        , out finalArray[15]);
+            Eloi.E_PrimitiveBoolUtility.UshortToTwoBytes(
+                        in source.m_data.m_height
                         , out finalArray[16]
                         , out finalArray[17]);
             Eloi.E_PrimitiveBoolUtility.IntToFourBytes(
-                        in source.m_data.m_startByteIndex1D
+                        in source.m_data.m_startByteIndex1DAsByte
                         , out finalArray[18]
                         , out finalArray[19]
                         , out finalArray[20]

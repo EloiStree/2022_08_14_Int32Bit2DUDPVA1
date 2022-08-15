@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -89,6 +90,15 @@ namespace Eloi
     {
         public Int32BitsArray2DMultiPackagePreBytes m_data;
     }
+    [System.Serializable]
+    public class Int32BitsArray2DMultiPackagePreBytesWrapperWithDate: Int32BitsArray2DMultiPackagePreBytesWrapper
+    {
+        public DateTime m_sentTime;
+        public DateTime m_receivedTime;
+        public long m_tickElapsed;
+        public double m_millisecondsElapsed ;
+        public double m_secondsElapsed ;
+    }
     public abstract class AConvert_Compressed_PreBytes2FullBytesStorageMono : MonoBehaviour, IConvert_Compressed_PreBytes2FullBytesStorage
     {
         public abstract void Convert(in Int32BitsArray2DSoloPackagePreBytesWrapper source, ref Int32BitsArray2DSoloPackageFullBytesWrapper result);
@@ -107,17 +117,17 @@ namespace Eloi
     public abstract class AConvert_Uncompressed_FullBytesStorage2PreBytesMono : MonoBehaviour, IConvert_Uncompressed_FullBytesStorage2PreBytes
     {
         public abstract void Convert(in Int32BitsArray2DSoloPackageFullBytesWrapper source, ref Int32BitsArray2DSoloPackagePreBytesWrapper result);
-        public abstract void Convert(in Int32BitsArray2DMultiPackageFullBytesWrapper source, ref Int32BitsArray2DMultiPackagePreBytesWrapper result);
+        public abstract void Convert(in Int32BitsArray2DMultiPackageFullBytesWrapper source, ref Int32BitsArray2DMultiPackagePreBytesWrapperWithDate result);
     }
     public abstract class AConvert_Uncompressed_FullBytesStorage2PreBytes : IConvert_Uncompressed_FullBytesStorage2PreBytes
     {
         public abstract void Convert(in Int32BitsArray2DSoloPackageFullBytesWrapper source, ref Int32BitsArray2DSoloPackagePreBytesWrapper result);
-        public abstract void Convert(in Int32BitsArray2DMultiPackageFullBytesWrapper source, ref Int32BitsArray2DMultiPackagePreBytesWrapper result);
+        public abstract void Convert(in Int32BitsArray2DMultiPackageFullBytesWrapper source, ref Int32BitsArray2DMultiPackagePreBytesWrapperWithDate result);
     }
     public interface IConvert_Uncompressed_FullBytesStorage2PreBytes
     {
         public void Convert(in Int32BitsArray2DSoloPackageFullBytesWrapper source, ref Int32BitsArray2DSoloPackagePreBytesWrapper  result);
-        public void Convert(in Int32BitsArray2DMultiPackageFullBytesWrapper source, ref Int32BitsArray2DMultiPackagePreBytesWrapper result);
+        public void Convert(in Int32BitsArray2DMultiPackageFullBytesWrapper source, ref Int32BitsArray2DMultiPackagePreBytesWrapperWithDate result);
     }
 
     [System.Serializable]

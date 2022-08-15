@@ -24,7 +24,7 @@ public class IDD_Int32BitsFirstAttemptMulti : MonoBehaviour
     public Int32BitsArray2DMultiPackageFullBytesWrapper [] aw3;
     public BytesToUncompressWrapper []  maw_storedBytes;
     public Int32BitsArray2DMultiPackageFullBytesWrapper [] aw5;
-    public Int32BitsArray2DMultiPackagePreBytesWrapper [] aw6;
+    public Int32BitsArray2DMultiPackagePreBytesWrapperWithDate [] aw6;
     public Int32BitsArray2DWrapper aw7;
     public TextureSourceToInt32BitsArray2DWrapper aw9;
 
@@ -87,7 +87,8 @@ public class IDD_Int32BitsFirstAttemptMulti : MonoBehaviour
         i1.Convert(in this.aw1, ref this.aw2, in m_maxPackageByteSize);
         aw3 = new Int32BitsArray2DMultiPackageFullBytesWrapper[aw2.Count];
         maw_storedBytes = new BytesToUncompressWrapper[aw2.Count];
-
+        aw5 = new Int32BitsArray2DMultiPackageFullBytesWrapper[aw2.Count];
+        aw6 = new Int32BitsArray2DMultiPackagePreBytesWrapperWithDate[aw2.Count];
         if (i2 == null) return;
         for (int i = 0; i < aw2.Count; i++)
         {
@@ -103,7 +104,7 @@ public class IDD_Int32BitsFirstAttemptMulti : MonoBehaviour
             aw5[i].m_data.m_compressedInOneBlockOfBytesToStore =
                  this.maw_storedBytes[i].m_data.m_rawByteThatCanBeUncompress;
 
-            aw6[i] = new Int32BitsArray2DMultiPackagePreBytesWrapper();
+            aw6[i] = new Int32BitsArray2DMultiPackagePreBytesWrapperWithDate();
             i3.Convert(in this.aw5[i], ref aw6[i]);
         }
         if (i4 == null) return;

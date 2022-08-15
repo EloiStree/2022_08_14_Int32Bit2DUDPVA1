@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +10,7 @@ public class BAWInt32bitsToTextureMono : MonoBehaviour
     public int[] m_colorIntBool;
     public int m_width;
     public int m_height;
-    public RenderTexture m_renderTextureCreated;
+    public Texture m_renderTextureCreated;
     public bool m_useUpdate;
     public ComputeShader m_convertShader;
     public ComputeBuffer m_recovertIntBool;
@@ -26,14 +27,14 @@ public class BAWInt32bitsToTextureMono : MonoBehaviour
     public Eloi.ClassicUnityEvent_Texture m_onTextureChanged;
 
 
-    void Update()
-    {
-        if (m_useUpdate) {
-            if (m_colorIntBool.Length == 0)
-                m_colorIntBool = new int[(m_width * m_height)/32];
-            Push(m_colorIntBool);
-        }
-    }
+    //void Update()
+    //{
+    //    if (m_useUpdate) {
+    //        if (m_colorIntBool.Length == 0)
+    //            m_colorIntBool = new int[(m_width * m_height)/32];
+    //        Push(m_colorIntBool, );
+    //    }
+    //}
 
     public void SetSize(int width, int height)
     {
@@ -50,6 +51,9 @@ public class BAWInt32bitsToTextureMono : MonoBehaviour
         } 
 
     }
+
+   
+
     public void SetSizeFrom(Texture2D texture)
     {
         SetSize(texture.width, texture.height);
@@ -72,14 +76,15 @@ public class BAWInt32bitsToTextureMono : MonoBehaviour
             SetSize(rt.width, rt.height);
         }
     }
-  
-
-    public  void Push(int[] int32bitsArray)
+    public void Push(in int[] arrayOfBitUnderInt, in int width, in int height, ref Texture texture)
     {
-        m_colorIntBool = int32bitsArray;
+        m_colorIntBool = arrayOfBitUnderInt;
         if (m_colorIntBool.Length <= 0)
             return;
-        SetSize(m_width, m_height);
+        m_width = width;
+        m_height = height;
+        m_renderTextureCreated = texture;
+    
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
@@ -90,7 +95,8 @@ public class BAWInt32bitsToTextureMono : MonoBehaviour
         m_numberOfUdpPackageBAWPerSeconds = (m_numberOfBytesBAW * m_imagePerSecondsEstimation / 65000.0);
         m_numberOfUdpMBPerSeconds = (m_numberOfBytesBAW * m_imagePerSecondsEstimation * 0.000001);
 
-        if (m_recovertIntBool == null || int32bitsArray.Length != m_recovertIntBool.count)
+        //256 * 32 =8192 
+        if (m_recovertIntBool == null || m_colorIntBool.Length != m_recovertIntBool.count*32)
         {
             //TODO: Should Change if not same lenght
             m_recovertIntBool = new ComputeBuffer(m_lenght / 32, sizeof(int));

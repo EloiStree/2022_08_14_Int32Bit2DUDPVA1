@@ -63,43 +63,7 @@ namespace Eloi
     {
         public int m_maxSizeinByte=65472;
         public long m_lastConvetedWatchTime;
-        //public void Convert(in int[] array, in int maxSizeMod32InByte, ref List<byte[]> result)
-        //{
-        //    m_maxSizeinByte = maxSizeMod32InByte;
-
-        //    if (result == null)
-        //        result = new List<byte[]>();
-
-        //    int blockCount = Mathf.CeilToInt((array.Length * 4) / m_maxSizeinByte);
-        //    int blockRest = (array.Length * 4) % m_maxSizeinByte;
-
-        //    for (int i = 0; i < blockCount; i++)
-        //    {
-        //        if (i == blockCount - 1)
-        //        {
-        //            if (result[i] == null || result[i].Length != blockRest)
-        //                result.Add(new byte[blockRest]);
-        //        }
-        //        else
-        //        {
-        //            if (result[i] == null || result[i].Length != m_maxSizeinByte)
-        //                result.Add(new byte[m_maxSizeinByte]);
-        //        }
-        //    }
-
-        //    for (int i = 0; i < blockCount; i++)
-        //    {
-        //        if (i == blockCount - 1)
-        //        {
-        //            Buffer.BlockCopy(array, 0, result[i], i * maxSizeMod32InByte, blockRest);
-        //        }
-        //        else
-        //        {
-        //            Buffer.BlockCopy(array, 0, result[i], i * maxSizeMod32InByte, maxSizeMod32InByte);
-        //        }
-        //    }
-        //}
-
+     
         public float m_blockCountAsFloat;
         public int m_lastBlockCount;
         public int m_lastBlockRest;
@@ -159,7 +123,7 @@ namespace Eloi
 
             for (int i = 0; i < blockCount; i++)
             {
-                result[i].m_data.m_startByteIndex1D = i * maxSizeMod32InByte;
+                result[i].m_data.m_startByteIndex1DAsByte = i * maxSizeMod32InByte;
                 if (hasRest && i == blockCount - 1)
                 {
                     Buffer.BlockCopy(array, i * maxSizeMod32InByte, result[i].m_data.m_arrayOfBitUnderIntAsBytesGroup, 0, blockRest);

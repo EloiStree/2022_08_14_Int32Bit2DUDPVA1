@@ -17,19 +17,19 @@ namespace Eloi
             GetWithAndHeightof(in source.m_data.m_textureReference, out result.m_data.m_width, out result.m_data.m_height);
 
         }
-        private void GetWithAndHeightof(in Texture textureReference, out int width, out int height)
+        private void GetWithAndHeightof(in Texture textureReference, out ushort width, out ushort height)
         {
             if (textureReference is Texture2D)
             {
                 Texture2D t = (Texture2D)textureReference;
-                width = t.width;
-                height = t.height;
+                width =(ushort) t.width;
+                height = (ushort)t.height;
             }
             else if (textureReference is RenderTexture)
             {
                 RenderTexture t = (RenderTexture)textureReference;
-                width = t.width;
-                height = t.height;
+                width = (ushort)t.width;
+                height = (ushort)t.height;
             }
             else {
                 width = 0;

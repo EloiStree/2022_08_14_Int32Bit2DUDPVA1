@@ -34,8 +34,8 @@ namespace Eloi
     public struct Int32BitsArray2D
     {
         public ContextID m_contextId;
-        public int m_width;
-        public int m_height;
+        public ushort m_width;
+        public ushort m_height;
         public int [] m_arrayOfBitUnderInt;
     }
     
@@ -43,8 +43,8 @@ namespace Eloi
     public struct Int32BitsArray2DSoloPackagePreBytes
     {
         public ContextID m_contextId;
-        public int m_width;
-        public int m_height;
+        public ushort m_width;
+        public ushort m_height;
         public byte[] m_arrayOfBitUnderIntAsBytesGroup;
     }
     
@@ -58,9 +58,9 @@ namespace Eloi
     public struct Int32BitsArray2DMultiPackagePreBytes
     {
         public ContextID m_contextId;
-        public int m_width;
-        public int m_height;
-        public int m_startByteIndex1D;
+        public ushort m_width;
+        public ushort m_height;
+        public int m_startByteIndex1DAsByte;
         public byte[] m_arrayOfBitUnderIntAsBytesGroup;
     }
    
