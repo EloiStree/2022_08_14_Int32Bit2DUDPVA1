@@ -30,9 +30,12 @@ public class IDD_Int32BitsFirstAttemptMulti : MonoBehaviour
 
 
 
+    [Header("Compress")]
     public AConvert_Compressed_Texture2Int32BitsArrayMono ia0;
     public AConvert_Compressed_Int32BitsArray2PreBytesMono ia1;
     public AConvert_Compressed_PreBytes2FullBytesStorageMono ia2;
+
+    [Header("Uncompress")]
     public AConvert_Uncompressed_FullBytesStorage2PreBytesMono ia3;
     public AConvert_Uncompressed_PreBytes2Int32BitsArrayMono ia4;
     public AConvert_Uncompressed_Int32BitsArray2TextureMono ia5;

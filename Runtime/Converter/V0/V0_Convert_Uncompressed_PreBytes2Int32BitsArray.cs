@@ -67,7 +67,10 @@ public class ByteToInt32BitArray2DItem
             m_array.m_data.m_arrayOfBitUnderInt.Length != intNeeded)
             m_array.m_data.m_arrayOfBitUnderInt = new int[intNeeded];
 
-        Buffer.BlockCopy(arrayOfBitUnderInt, 0, m_array.m_data.m_arrayOfBitUnderInt, startIndex1DAsByte/4, arrayOfBitUnderInt.Length);
+        //Should be but apparently not
+        //Buffer.BlockCopy(arrayOfBitUnderInt, 0, m_array.m_data.m_arrayOfBitUnderInt, startIndex1DAsByte / 4, arrayOfBitUnderInt.Length);
+        //
+        Buffer.BlockCopy(arrayOfBitUnderInt, 0, m_array.m_data.m_arrayOfBitUnderInt, startIndex1DAsByte , arrayOfBitUnderInt.Length);
     }
-    
+
 }

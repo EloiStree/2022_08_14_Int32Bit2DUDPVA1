@@ -10,7 +10,6 @@ public class BAWTextureToInt32bitsShaderMono : MonoBehaviour
     public int m_width;
     public int m_height;
     public float m_whitePercent = 0.8f;
-    public bool m_useUpdate;
     public Texture m_renderTextureIn;
     public ComputeShader m_convertShaderTextToWhite;
     public ComputeShader m_convertShaderWhiteToInt32_2;
@@ -38,11 +37,7 @@ public class BAWTextureToInt32bitsShaderMono : MonoBehaviour
     public class Int32bitsEvent : UnityEvent<int[]> { }
 
 
-    void Update()
-    {
-        if (m_useUpdate)
-            Push( m_renderTextureIn );
-    }
+    
     private int m_previousLenght;
 
     public void Convert(in Texture textureUsed, out int[] arrayOfBitUnderInt)

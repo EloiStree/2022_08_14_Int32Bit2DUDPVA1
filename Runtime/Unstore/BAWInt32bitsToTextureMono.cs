@@ -14,7 +14,7 @@ public class BAWInt32bitsToTextureMono : MonoBehaviour
     public bool m_useUpdate;
     public ComputeShader m_convertShader;
     public ComputeBuffer m_recovertIntBool;
-    public int m_lenght;
+    public int m_bitNeeded;
     public double m_imagePerSecondsEstimation = 30;
     public int m_numberOfIntBAW;
     public int m_numberOfBytesBAW;
@@ -23,7 +23,7 @@ public class BAWInt32bitsToTextureMono : MonoBehaviour
     public double m_numberOfUdpMBPerSeconds;
     public int[] m_debugInt = new int[50];
     public long m_convertedTimeInMilliseconds;
-
+        
     public Eloi.ClassicUnityEvent_Texture m_onTextureChanged;
 
 
@@ -44,6 +44,8 @@ public class BAWInt32bitsToTextureMono : MonoBehaviour
             (m_renderTextureCreated != null && (m_renderTextureCreated.width != width
         || m_renderTextureCreated.height != height))) { 
         
+          
+
         RenderTexture rt = new RenderTexture(m_width, m_height, 0);
         rt.enableRandomWrite = true;
         Graphics.SetRandomWriteTarget(0, rt);
@@ -88,18 +90,21 @@ public class BAWInt32bitsToTextureMono : MonoBehaviour
         Stopwatch watch = new Stopwatch();
         watch.Start();
 
-        m_lenght = m_width * m_height;
-        m_numberOfIntBAW = (int)(m_lenght / 32f);
-        m_numberOfBytesBAW = (int)(m_lenght / 4f);
+        m_bitNeeded = m_width * m_height;
+        m_numberOfIntBAW = (int)(m_bitNeeded / 32f);
+        m_numberOfBytesBAW = (int)(m_bitNeeded / 4f);
         m_numberOfUdpPackageBAW = m_numberOfBytesBAW / 65000;
         m_numberOfUdpPackageBAWPerSeconds = (m_numberOfBytesBAW * m_imagePerSecondsEstimation / 65000.0);
         m_numberOfUdpMBPerSeconds = (m_numberOfBytesBAW * m_imagePerSecondsEstimation * 0.000001);
 
         //256 * 32 =8192 
-        if (m_recovertIntBool == null || m_colorIntBool.Length != m_recovertIntBool.count*32)
+        int intNeeded = m_bitNeeded / 32;
+        if (m_recovertIntBool == null || m_colorIntBool.Length != intNeeded)
         {
+            if (m_recovertIntBool != null)
+                m_recovertIntBool.Dispose();
             //TODO: Should Change if not same lenght
-            m_recovertIntBool = new ComputeBuffer(m_lenght / 32, sizeof(int));
+            m_recovertIntBool = new ComputeBuffer(intNeeded, sizeof(int));
         }
         m_recovertIntBool.SetData(m_colorIntBool);
         int kernel = m_convertShader.FindKernel("CSMain");
