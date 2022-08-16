@@ -2,8 +2,7 @@
     "name": "be.eloistree.int32bit2udpva1",
     "rootNamespace": "Eloi",
     "references": [
-        "be.eloistree.generaltoolbox",
-        "be.eloistree.texturebyteshaderthroughudp"
+        "be.eloistree.generaltoolbox"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

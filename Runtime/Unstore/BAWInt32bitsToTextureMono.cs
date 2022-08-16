@@ -24,7 +24,7 @@ public class BAWInt32bitsToTextureMono : MonoBehaviour
     public int[] m_debugInt = new int[50];
     public long m_convertedTimeInMilliseconds;
         
-    public Eloi.ClassicUnityEvent_Texture m_onTextureChanged;
+    public EloiDependency.ClassicUnityEvent_Texture m_onTextureChanged;
 
 
     //void Update()

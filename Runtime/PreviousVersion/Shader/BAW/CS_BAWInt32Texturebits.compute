@@ -1,0 +1,65 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+RWTexture2D<float4> Given;
+RWStructuredBuffer<int> TextureAsIntBool;
+int Width;
+float WhitePercent;
+/*bool GetBit( int value,  int bitNumber)
+{
+    return (b & (1 << bitNumber)) != 0;
+}*/
+[numthreads(16,16, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    int index = (id.x + Width * id.y);
+    int byteIndex = (int)(index / 32.0);
+    int bitIndex = index % 32;   
+    bool isTrue = (TextureAsIntBool[byteIndex] & (1 << bitIndex)) != 0;
+    if (isTrue)
+        Given[id.xy] = float4(1, 1, 1, 1);
+    else
+        Given[id.xy] =float4(0, 0, 0, 0);
+}
+
+/*
+ public static bool GetBit(in int b, in int bitNumber)
+        {
+            return (b & (1 << bitNumber)) != 0;
+        }
+*/
+
+
+/* In C#
+
+public static void Set(ref int theInt, in int bitPosition, in bool value)
+    {
+        if (value) theInt |= (1 << bitPosition);
+        else theInt &= ~(1 << bitPosition);
+
+    }
+        BitArray bitIntArray = new BitArray(new bool[32]);
+        for (int i = 0; i < m_isWhite.Length; i++)
+        {
+            int byteIndex = (int)(i / 32f);
+            int bitIndex = i % 32;
+            bitIntArray.Set(bitIndex, m_isWhite[i] == 1);
+
+            if (bitIndex == 31)
+                m_isWhiteOn32BitsInt[byteIndex] = ConvertToInt(bitIntArray);
+        }
+
+        // INT ARRAY
+        Color[] pixelWhite32 = new Color[m_isWhiteOn32BitsInt.Length * 32];
+        for (int i = 0; i < m_isWhiteOn32BitsInt.Length; i++)
+        {
+            for (int j = 0; j < 32; j++)
+            {
+                pixelWhite32[(i * 32) + j] = GetIntValueAsColor(in m_isWhiteOn32BitsInt[i], in j);
+            }
+        }
+        m_texture2DBits32 = new Texture2D(m_texture.width, m_texture.height);
+        m_texture2DBits32.SetPixels(pixelWhite32);
+        m_texture2DBits32.Apply();
+        
+        */

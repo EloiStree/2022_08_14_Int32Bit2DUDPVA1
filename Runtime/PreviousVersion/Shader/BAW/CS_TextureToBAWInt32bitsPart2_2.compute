@@ -1,0 +1,90 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+RWStructuredBuffer<int> IsWhiteInt;
+RWStructuredBuffer<int> TextureAsIntBool;
+
+int Width;
+
+int GetIntCompressAt(uint bitIndex) {
+    int target = 0;
+    for (uint i = 0; i < 32; i++)
+    {
+        target <<= 1; target |= IsWhiteInt[bitIndex +(31-i)] ? 1 : 0;
+    }
+    return target;
+}
+
+[numthreads(2,1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    uint index = id.x;
+    uint index32Bit = index * 32;
+    TextureAsIntBool[index] = GetIntCompressAt(index32Bit);
+}
+
+
+/*// Would be cool but don't work because of multithreading
+#pragma kernel CSMain
+
+RWTexture2D<float4> Given;
+RWStructuredBuffer<int> TextureAsIntBool;
+
+uint Width;
+float WhitePercent;
+
+[numthreads(16,16, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    uint index = (id.x + (Width * id.y));
+    bool isWhite =
+        Given[id.xy].x >= WhitePercent &&
+        Given[id.xy].y >= WhitePercent &&
+        Given[id.xy].z >= WhitePercent &&
+        Given[id.xy].w > 0.0;
+        uint byteIndex =index / 32;
+        uint bitIndex = index % 32;
+        if (isWhite)
+            TextureAsIntBool[byteIndex] |= (1 << bitIndex);
+        else
+            TextureAsIntBool[byteIndex] &= ~(1 << bitIndex);
+}
+
+*/
+
+
+
+
+
+/* In C#
+
+public static void Set(ref int theInt, in int bitPosition, in bool value)
+    {
+        if (value) theInt |= (1 << bitPosition);
+        else theInt &= ~(1 << bitPosition);
+
+    }
+        BitArray bitIntArray = new BitArray(new bool[32]);
+        for (int i = 0; i < m_isWhite.Length; i++)
+        {
+            int byteIndex = (int)(i / 32f);
+            int bitIndex = i % 32;
+            bitIntArray.Set(bitIndex, m_isWhite[i] == 1);
+
+            if (bitIndex == 31)
+                m_isWhiteOn32BitsInt[byteIndex] = ConvertToInt(bitIntArray);
+        }
+
+        // INT ARRAY
+        Color[] pixelWhite32 = new Color[m_isWhiteOn32BitsInt.Length * 32];
+        for (int i = 0; i < m_isWhiteOn32BitsInt.Length; i++)
+        {
+            for (int j = 0; j < 32; j++)
+            {
+                pixelWhite32[(i * 32) + j] = GetIntValueAsColor(in m_isWhiteOn32BitsInt[i], in j);
+            }
+        }
+        m_texture2DBits32 = new Texture2D(m_texture.width, m_texture.height);
+        m_texture2DBits32.SetPixels(pixelWhite32);
+        m_texture2DBits32.Apply();
+        
+        */

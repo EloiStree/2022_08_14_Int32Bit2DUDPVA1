@@ -1,0 +1,19 @@
+
+#pragma kernel CSMain
+
+RWTexture2D<float4> Result;
+RWStructuredBuffer<float> TextureAsFloat;
+int m_width;
+
+[numthreads(16, 16, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    int index = (id.y * m_width + id.x)*4;
+   // Result[id.xy] = float4(TextureAsFloat[id.x], TextureAsFloat[id.x + 1], TextureAsFloat[id.x + 2], TextureAsFloat[id.x + 3]);
+     Result[id.xy]=float4(
+         TextureAsFloat[index],
+         TextureAsFloat[index +1],
+         TextureAsFloat[index +2],
+         TextureAsFloat[index +3]
+         );
+}

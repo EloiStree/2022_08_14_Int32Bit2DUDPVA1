@@ -29,17 +29,6 @@ namespace Eloi
                 rt.enableRandomWrite = true;
                 Graphics.SetRandomWriteTarget(0, rt);
                 t.m_texture = rt;
-                //  t.m_texture = new Texture2D(source.m_data.m_width, source.m_data.m_height);
-                //Color32[] c=  t.m_texture.GetPixels32();
-                //  for (int i = 0; i < c.Length; i++)
-                //  {
-                //      c[i].g = 255;
-                //      c[i].r = 0;
-                //      c[i].b = 0;
-                //      c[i].a = 255; 
-                //  }
-                //  t.m_texture.SetPixels32(c);
-                //  t.m_texture.Apply();
                 m_managedTexture.Add(t);
             }
             t.m_contextId = source.m_data.m_contextId.m_contextId;
